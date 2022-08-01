@@ -18,15 +18,6 @@ class Kite {
     );
   };
 
-  public getPositions = async (): Promise<[any, any]> => {
-    try {
-      const positions = await this._kc.getPositions();
-      return [positions, null];
-    } catch (error) {
-      return [null, error];
-    }
-  };
-
   public get loginUrl(): string {
     return this._loginUrl;
   }

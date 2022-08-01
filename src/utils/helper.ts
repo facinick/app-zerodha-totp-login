@@ -1,9 +1,3 @@
-import * as fs from 'fs';
-import * as path from 'path';
-
-import Config from '../private/zerodha.json';
-import { TConfig } from '../types/config';
-
 export const success = ({
   message,
 }: {
@@ -17,13 +11,6 @@ export const wait = (seconds: number) =>
     setTimeout(resolve, seconds * 1000);
   });
 
-export const saveZerodhaConfigLocal = async (config: TConfig) => {
-  await fs.writeFileSync(
-    path.resolve(__dirname, '../private/zerodha.json'),
-    JSON.stringify(config, null, 2)
-  );
-};
-
 export function comparer<Type>(
   otherArray: Array<Type>
 ): (current: Type & { instrument_token: number }) => boolean {
@@ -36,12 +23,12 @@ export function comparer<Type>(
   };
 }
 
-export const getUserId = () => Config.USERNAME;
+export const getUserId = () => process.env.USERNAME;
 
-export const getPassword = () => Config.PASSWORD;
+export const getPassword = () => process.env.PASSWORD;
 
 export const getTradetronZerodhaConnectUrl = (zerodhaApiKey: string) => {
-  return `${Config.ZERODHA_APP_CONNECT_URL}${zerodhaApiKey}`;
+  return `${process.env.ZERODHA_APP_CONNECT_URL}${zerodhaApiKey}`;
 };
 
 export const isAWithinRangeOfB = ({

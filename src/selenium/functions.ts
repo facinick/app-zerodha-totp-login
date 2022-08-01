@@ -19,13 +19,15 @@ const WAIT_FOR_MS = 10000;
 
 // connect url[1] will redirect to kite login page[2]
 export const gotoConnectionPage = async (url?: string): Promise<void> => {
-  await driver.get(url ? url : getTradetronZerodhaConnectUrl(Config.API_KEY));
+  await driver.get(
+    url ? url : getTradetronZerodhaConnectUrl(process.env.API_KEY)
+  );
 };
 
 // kite login page [2] will authneitcate user and finally redirect to zerodha's success url[3]
 export const wait_RedirectToZerodhaLoginPage = async (): Promise<void> => {
   await driver.wait(
-    Driver.until.urlContains(Config.ZERODHA_KITE_LOGIN_URL),
+    Driver.until.urlContains(process.env.ZERODHA_KITE_LOGIN_URL),
     WAIT_FOR_MS
   );
 };
@@ -33,7 +35,7 @@ export const wait_RedirectToZerodhaLoginPage = async (): Promise<void> => {
 // tt success page[3] is here
 export const wait_RedirectToTTSuccessPage = async (): Promise<void> => {
   await driver.wait(
-    Driver.until.urlContains(`${Config.TT_SUCCESS_PAGE_CONTAINS}`),
+    Driver.until.urlContains(`${process.env.TT_SUCCESS_PAGE_CONTAINS}`),
     WAIT_FOR_MS
   );
 };
