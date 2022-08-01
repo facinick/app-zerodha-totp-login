@@ -53,14 +53,14 @@ export const input_userid = async (): Promise<void> => {
   const useridInputField = await driver.findElement(By.id(UsernameInputId));
   await useridInputField.sendKeys(getUserId());
   while ((await useridInputField.getAttribute('value')) !== getUserId())
-    wait(2);
+    wait(1);
 };
 
 export const input_password = async (): Promise<void> => {
   const passwordInputField = await driver.findElement(By.id(PasswordInputId));
   await passwordInputField.sendKeys(getPassword());
   while ((await passwordInputField.getAttribute('value')) !== getPassword())
-    wait(2);
+    wait(1);
 };
 
 export const click_submitUsernamePassword = async (): Promise<void> => {
@@ -79,7 +79,7 @@ export const wait_RedirectionToOTPPage = async (): Promise<void> => {
 export const input_TOTP = async (otp: string): Promise<void> => {
   const otpInputField = await driver.findElement(By.id(TOTPInputId));
   await otpInputField.sendKeys(otp);
-  while ((await otpInputField.getAttribute('value')) !== otp) wait(2);
+  while ((await otpInputField.getAttribute('value')) !== otp) wait(1);
 };
 
 export const click_submitTOTP = async (): Promise<void> => {

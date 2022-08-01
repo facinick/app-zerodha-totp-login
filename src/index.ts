@@ -9,6 +9,7 @@ const main = async (): Promise<void> => {
   });
 
   await connect();
+  process.exit();
 };
 
 main();

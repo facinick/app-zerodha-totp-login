@@ -2,6 +2,7 @@ import notifier from 'node-notifier';
 
 import { ColorMap, COLORS, Level } from '../types/logger';
 export class Logger {
+  static id = -1;
   private constructor() {
     // do nothing, just marked private
   }
@@ -25,7 +26,9 @@ export class Logger {
       level = Level.INFO;
     }
 
-    const logline = `log: [${className}] [${level}] ${message}`;
+    Logger.id = Logger.id + 1;
+
+    const logline = `log [${Logger.id}]: [${className}] [${level}] ${message}`;
     const color = ColorMap.get(level);
 
     if (level === Level.ERROR) {
