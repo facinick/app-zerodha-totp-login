@@ -1,10 +1,11 @@
 import { By } from 'selenium-webdriver';
 
-import Config from '../private/zerodha.json';
 import {
   PasswordInputId,
   TOTPInputId,
+  TT_SUCCESS_PAGE_CONTAINS,
   UsernameInputId,
+  ZERODHA_KITE_LOGIN_URL,
 } from '../utils/constants';
 import {
   getPassword,
@@ -27,7 +28,7 @@ export const gotoConnectionPage = async (url?: string): Promise<void> => {
 // kite login page [2] will authneitcate user and finally redirect to zerodha's success url[3]
 export const wait_RedirectToZerodhaLoginPage = async (): Promise<void> => {
   await driver.wait(
-    Driver.until.urlContains(process.env.ZERODHA_KITE_LOGIN_URL),
+    Driver.until.urlContains(ZERODHA_KITE_LOGIN_URL),
     WAIT_FOR_MS
   );
 };
@@ -35,7 +36,7 @@ export const wait_RedirectToZerodhaLoginPage = async (): Promise<void> => {
 // tt success page[3] is here
 export const wait_RedirectToTTSuccessPage = async (): Promise<void> => {
   await driver.wait(
-    Driver.until.urlContains(`${process.env.TT_SUCCESS_PAGE_CONTAINS}`),
+    Driver.until.urlContains(`${TT_SUCCESS_PAGE_CONTAINS}`),
     WAIT_FOR_MS
   );
 };

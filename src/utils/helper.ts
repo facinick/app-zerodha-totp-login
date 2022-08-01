@@ -1,3 +1,5 @@
+import { ZERODHA_APP_CONNECT_URL } from './constants';
+
 export const success = ({
   message,
 }: {
@@ -23,12 +25,12 @@ export function comparer<Type>(
   };
 }
 
-export const getUserId = () => process.env.USERNAME;
+export const getUserId = () => process.env.USERID;
 
 export const getPassword = () => process.env.PASSWORD;
 
 export const getTradetronZerodhaConnectUrl = (zerodhaApiKey: string) => {
-  return `${process.env.ZERODHA_APP_CONNECT_URL}${zerodhaApiKey}`;
+  return `${ZERODHA_APP_CONNECT_URL}${zerodhaApiKey}`;
 };
 
 export const isAWithinRangeOfB = ({
