@@ -1,4 +1,4 @@
-# Tradetron-zerodha-totp-login
+# App-zerodha-totp-login
 
 Automate TOTP login for a Zerodha Connect App.
 

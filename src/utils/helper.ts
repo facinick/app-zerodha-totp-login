@@ -29,7 +29,7 @@ export const getUserId = () => process.env.USERID;
 
 export const getPassword = () => process.env.PASSWORD;
 
-export const getTradetronZerodhaConnectUrl = (zerodhaApiKey: string) => {
+export const getAppZerodhaConnectUrl = (zerodhaApiKey: string) => {
   return `${ZERODHA_APP_CONNECT_URL}${zerodhaApiKey}`;
 };
 
