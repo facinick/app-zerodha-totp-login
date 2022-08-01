@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
+import Config from '../private/zerodha.json';
 import { TConfig } from '../types/config';
 
 export const success = ({
@@ -35,12 +36,12 @@ export function comparer<Type>(
   };
 }
 
-export const getUserId = () => '';
+export const getUserId = () => Config.USERNAME;
 
-export const getPassword = () => '';
+export const getPassword = () => Config.PASSWORD;
 
-export const getTradetronZerodhaZonnectUrl = (zerodhaApiKey: string) => {
-  return `https://kite.trade/connect/login?v=3&api_key=${zerodhaApiKey}`;
+export const getTradetronZerodhaConnectUrl = (zerodhaApiKey: string) => {
+  return `${Config.ZERODHA_APP_CONNECT_URL}${zerodhaApiKey}`;
 };
 
 export const isAWithinRangeOfB = ({

@@ -1,34 +1,14 @@
 import { Logger } from './Logger/logger';
-// import { Kite } from './Zerodha/kite';
-import { gotoConnectionPage } from './Zerodha/login';
-// import ZerodhaConfig from './private/zerodha.json';
+import { connect } from './Zerodha/login';
 
 const main = async (): Promise<void> => {
   Logger.info({
-    message: `starting main app`,
+    message: `beginning to connect tt to zerodha`,
     className: 'main',
     notify: true,
   });
-  // create kite instance
-  //   Kite.getInstance().init({ api_key: ZerodhaConfig.API_KEY });
 
-  // login to kite connect api
-  //   const logged_in = await login();
-
-  await gotoConnectionPage();
-
-  //   if (!logged_in) {
-  //     Logger.error({
-  //       message: `something went wrong, couldn't log in. aborting!`,
-  //       className: 'main',
-  //     });
-  //     process.exit();
-  //   }
-
-  //   Logger.success({
-  //     message: `logged in!`,
-  //     className: 'main',
-  //   });
+  await connect();
 };
 
 main();
