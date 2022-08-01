@@ -11,6 +11,11 @@ export const success = ({
   return { message };
 };
 
+export const wait = (seconds: number) =>
+  new Promise((resolve) => {
+    setTimeout(resolve, seconds * 1000);
+  });
+
 export const saveZerodhaConfigLocal = async (config: TConfig) => {
   await fs.writeFileSync(
     path.resolve(__dirname, '../private/zerodha.json'),
@@ -29,6 +34,14 @@ export function comparer<Type>(
     );
   };
 }
+
+export const getUserId = () => '';
+
+export const getPassword = () => '';
+
+export const getTradetronZerodhaZonnectUrl = (zerodhaApiKey: string) => {
+  return `https://kite.trade/connect/login?v=3&api_key=${zerodhaApiKey}`;
+};
 
 export const isAWithinRangeOfB = ({
   a,

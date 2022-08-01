@@ -1,7 +1,7 @@
 import { Logger } from './Logger/logger';
-import { Kite } from './Zerodha/kite';
-import { login } from './Zerodha/login';
-import ZerodhaConfig from './private/zerodha.json';
+// import { Kite } from './Zerodha/kite';
+import { gotoConnectionPage } from './Zerodha/login';
+// import ZerodhaConfig from './private/zerodha.json';
 
 const main = async (): Promise<void> => {
   Logger.info({
@@ -10,23 +10,25 @@ const main = async (): Promise<void> => {
     notify: true,
   });
   // create kite instance
-  Kite.getInstance().init({ api_key: ZerodhaConfig.API_KEY });
+  //   Kite.getInstance().init({ api_key: ZerodhaConfig.API_KEY });
 
   // login to kite connect api
-  const logged_in = await login();
+  //   const logged_in = await login();
 
-  if (!logged_in) {
-    Logger.error({
-      message: `something went wrong, couldn't log in. aborting!`,
-      className: 'main',
-    });
-    process.exit();
-  }
+  await gotoConnectionPage();
 
-  Logger.success({
-    message: `logged in!`,
-    className: 'main',
-  });
+  //   if (!logged_in) {
+  //     Logger.error({
+  //       message: `something went wrong, couldn't log in. aborting!`,
+  //       className: 'main',
+  //     });
+  //     process.exit();
+  //   }
+
+  //   Logger.success({
+  //     message: `logged in!`,
+  //     className: 'main',
+  //   });
 };
 
 main();

@@ -1,6 +1,17 @@
+import { By } from 'selenium-webdriver';
+
 import ZerodhaConfig from '../private/zerodha.json';
-import { saveZerodhaConfigLocal } from '../utils/helper';
+import driver, { Driver } from '../selenium/selenium';
+import {
+  getPassword,
+  getTradetronZerodhaZonnectUrl,
+  getUserId,
+  saveZerodhaConfigLocal,
+  wait,
+} from '../utils/helper';
 import { questionAsync } from '../utils/user_input';
+
+const WAIT_FOR_MS = 10000;
 
 import { Kite } from './kite';
 
@@ -84,4 +95,93 @@ export const is_access_token_valid = async ({
   }
 
   return true;
+};
+
+export const connect = async (): Promise<void> => {
+  // [goto] connect url
+  await gotoConnectionPage();
+  // [wait] for redirection to zerodha login page
+  await waitForRedirectToZerodhaLoginPage();
+  // [wait] for zerodha login page to finish loading
+  await waitForZerodhaLoginPageToFinishLoading();
+  // [fill] in userID
+  await fillUserId();
+  // [fill] in password
+  await fillPassword();
+  // [submit]
+  await clickSubmit();
+  // [wait] from redirection to otp input page
+  await waitForRedirectionToOTPPage();
+  // generate OTP using totp library
+  const otp = '';
+  // [fill] in OTP
+  await fillOTP(otp);
+  // [submit]
+  await clickContinue();
+  // [wait] for redirection to trdetron page
+  await waitForRedirectToTTPage();
+};
+
+export const gotoConnectionPage = async (): Promise<void> => {
+  await driver.get(getTradetronZerodhaZonnectUrl(`6jvertdihur4m3j0`));
+};
+
+const waitForRedirectToZerodhaLoginPage = async (): Promise<void> => {
+  await driver.wait(
+    Driver.until.urlContains(`kite.zerodha.com/connect/login?api`),
+    WAIT_FOR_MS
+  );
+};
+
+const waitForRedirectToTTPage = async (): Promise<void> => {
+  await driver.wait(
+    Driver.until.urlContains(`zerodha.tradetron.tech/login.php`),
+    WAIT_FOR_MS
+  );
+};
+
+const waitForZerodhaLoginPageToFinishLoading = async (): Promise<void> => {
+  // just waiting for the userid input field to load
+  await driver.wait(Driver.until.elementLocated(By.id(`userid`)), WAIT_FOR_MS);
+};
+
+const fillUserId = async (): Promise<void> => {
+  const useridInputField = await driver.findElement(By.id('userid'));
+  await useridInputField.sendKeys(getUserId());
+  await driver.wait(
+    Driver.until.elementTextIs(useridInputField, getUserId()),
+    WAIT_FOR_MS
+  );
+};
+
+const fillPassword = async (): Promise<void> => {
+  const passwordInputField = await driver.findElement(By.id('userid'));
+  await passwordInputField.sendKeys(getPassword());
+  passwordInputField.getAttribute('value');
+  while ((await passwordInputField.getAttribute('value')) !== getPassword())
+    wait(2);
+};
+
+const clickSubmit = async (): Promise<void> => {
+  const submitButton = await driver.findElement(By.css('button'));
+  await submitButton.click();
+};
+
+const waitForRedirectionToOTPPage = async (): Promise<void> => {
+  // just waiting for the otp input field to load
+  await driver.wait(Driver.until.elementLocated(By.id(`totp`)), WAIT_FOR_MS);
+};
+
+const fillOTP = async (otp: string): Promise<void> => {
+  const otpInputField = await driver.findElement(By.id('totp'));
+  await otpInputField.sendKeys(otp);
+  await driver.wait(
+    Driver.until.elementTextIs(otpInputField, otp),
+    WAIT_FOR_MS
+  );
+};
+
+const clickContinue = async (): Promise<void> => {
+  const continueButton = await driver.findElement(By.css('button'));
+  await continueButton.click();
 };

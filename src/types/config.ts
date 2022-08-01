@@ -6,4 +6,5 @@ export interface TConfig {
   PASSWORD: string;
   ACCESS_TOKEN: string;
   PIN: string;
+  TOTP_KEY: '';
 }
